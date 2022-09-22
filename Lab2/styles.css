@@ -5,6 +5,7 @@
 	justify-content: space-evenly;
 	list-style: none;
 	padding: 0;
+	margin: 0;
 }
 
 /* end Flexbox Part 1 */
@@ -16,6 +17,7 @@
 	display:flex;
 	list-style: none;
 	padding: 0;
+	margin: 0;
 }
 
 #flex-section2 li {
