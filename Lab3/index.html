@@ -6,16 +6,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=none" />
     <meta charset="utf-8" />
     <link rel="stylesheet" href="assets/css/screen.css" />
-    <script src="site.js"></script>
   </head>
 
   <body>
-    <form>
+    
+    <form id="form">
       <label> Bill Total: <input type="text" name="billTotal" id="billTotal"> </label>
-      <label> Tip: <input type="range" name="tip" min="0" max="100"> </label>
-      <label> Tip Percentage: <input type="text" name="tipPercent" disabled> </label>
-      <label> Tip Amount: <input type="text" name="tipAmount" disabled> </label>
-      <label> Total Bill with Tip: <input type="text" name="totalBillTip" disabled> </label>
+      <label> Tip: <input type="range" name="tip" min="0" max="100" id="tip"> </label>
+      <label> Tip Percentage: <input type="text" name="tipPercent" id="tipPercent" disabled> </label>
+      <label> Tip Amount: <input type="text" name="tipAmount" id="tipAmount" disabled> </label>
+      <label> Total Bill with Tip: <input type="text" name="totalBillTip" id="totalBillTip" disabled> </label>
     </form>
+
+    <script src="assets/js/site.js"></script>
   </body>
 </html>
