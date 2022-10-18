@@ -12,9 +12,10 @@ function calculate() {
   let x = 0;
   let y = 0;
 
-  if(isNaN(billTotal.value)){
+  if(isNaN(parseFloat(billTotal.value))){
     document.getElementById('error').style.display = "block";
-    //console.log("Error!!!")
+    tipAmount.value = 0;
+    totalBillTip.value = 0;
   }
 
   else{
