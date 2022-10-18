@@ -9,17 +9,29 @@
   </head>
 
   <body>
+    <main>
+      <form id="form">
+        <h2 class="form header2">ITMD 4/541 - Lab 3 - Aleksandar Kamenovic</h2>
+        <h1 class="form header1">Tip Calculator</h1>
 
-    <form id="form">
-      <label> Bill Total: <input type="text" name="billTotal" id="billTotal"> </label>
-      <label> Tip: <input type="range" name="tip" min="0" max="100" id="tip"> </label>
-      <label> Tip Percentage: <input type="text" name="tipPercent" id="tipPercent" disabled> </label>
-      <label> Tip Amount: <input type="text" name="tipAmount" id="tipAmount" disabled> </label>
-      <label> Total Bill with Tip: <input type="text" name="totalBillTip" id="totalBillTip" disabled> </label>
-    </form>
+        <label class="form label1" for="billTotal">Bill Total:</label>
+        <input class="form input1" type="text" name="billTotal" id="billTotal">
 
-    <p id="error">Please enter a valid number!</p>
+        <label class="form label2" for="tip">Tip:</label>
+        <input class="form input2" type="range" name="tip" min="0" max="100" id="tip">
 
+        <label class="form label3" for="tipPercent">Tip Percentage:</label>
+        <input class="form input3" type="text" name="tipPercent" id="tipPercent" disabled>
+
+        <label class="form label4" for="tipAmount">Tip Amount:</label>
+        <input class="form input4" type="text" name="tipAmount" id="tipAmount" disabled>
+
+        <label class="form label5" for="totalBillTip">Total Bill with Tip:</label>
+        <input class="form input5" type="text" name="totalBillTip" id="totalBillTip" disabled>
+
+        <p class ="form error" id="error">Please enter a valid number!</p>
+      </form>
+    </main>
     <script src="assets/js/site.js"></script>
   </body>
 </html>
