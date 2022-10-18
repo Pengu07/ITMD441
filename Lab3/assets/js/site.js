@@ -12,11 +12,20 @@ function calculate() {
   let x = 0;
   let y = 0;
 
-  tipPercent.value = tip.value + "%";
+  if(isNaN(billTotal.value)){
+    document.getElementById('error').style.display = "block";
+    //console.log("Error!!!")
+  }
 
-  x = parseFloat(billTotal.value) * parseFloat(tip.value/100);
-  tipAmount.value = x.toFixed(2);
+  else{
+    document.getElementById('error').style.display = "none";
+    tipPercent.value = tip.value + "%";
 
-  y = parseFloat(billTotal.value) + parseFloat(tipAmount.value);
-  totalBillTip.value = y.toFixed(2);
+    x = parseFloat(billTotal.value) * parseFloat(tip.value/100);
+    tipAmount.value = x.toFixed(2);
+
+    y = parseFloat(billTotal.value) + parseFloat(tipAmount.value);
+    totalBillTip.value = y.toFixed(2);
+  }
+
 }
