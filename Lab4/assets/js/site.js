@@ -1,6 +1,7 @@
 document.getElementById('namedLocationButton').addEventListener("click", namedLocationText);
 
-document.getElementById('geolocationButton').addEventListener("click", geolocationText);
+const geoButton = document.getElementById('geolocationButton');
+geoButton.addEventListener("click", geolocationText);
 
 let place;
 let coordinates;
@@ -14,10 +15,16 @@ function namedLocationText(){
 navigator.geolocation.getCurrentPosition(coords, error);
 function coords(pos){
   coordinates = pos.coords;
+  geoButton.disabled = false;
 }
 
 function error(err){
-  console.log("Error!")
+  console.log("Error! Geolocation Blocked!")
+  document.getElementById("geolocationText").innerHTML = "Geolocation has been disabled.\n"+
+  "Enable it and refresh the page to use geolocation.";
+  geoButton.disabled = true;
+  geoButton.style.display = "none";
+  document.getElementById("geolocationLabel").style.display = "none";
 }
 
 function geolocationText(){
