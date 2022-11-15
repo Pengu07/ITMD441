@@ -5,8 +5,46 @@ html{
   color: #e6e6e6
 }
 
+body{
+  display:grid;
+  grid-template-columns: 1fr 3fr 1fr;
+}
+main{
+  grid-column: 2/3;
+}
 
+form{
+  text-align: center;
+}
+
+article{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
 
 section{
   border: 0.15em solid #2d8ceb;
+  padding-left: 10px;
+  padding-right: 10px;
+  flex-grow: 1;
+}
+
+
+#mainSection{
+  font-size: 24px;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+
+
+
+.maxtemp{
+  font-size:24px;
+}
+
+.mintemp{
+  font-size:16px;
 }
