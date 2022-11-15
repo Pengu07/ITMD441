@@ -20,8 +20,8 @@ function coords(pos){
 
 function error(err){
   console.log("Error! Geolocation Blocked!")
-  document.getElementById("geolocationText").innerHTML = "Geolocation has been disabled.\n"+
-  "Enable it and refresh the page to use geolocation.";
+  document.getElementById("geolocationText").innerHTML = "Geolocation has been disabled."+
+  " Enable it and refresh the page to use geolocation.";
   geoButton.disabled = true;
   geoButton.style.display = "none";
   document.getElementById("geolocationLabel").style.display = "none";
