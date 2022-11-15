@@ -43,6 +43,10 @@ section{
   border: 0.15em solid #eb2d2d;
 }
 
+#placeholder{
+  font-size: 24px;
+  text-align: center;
+}
 
 .maxtemp{
   font-size:24px;
