@@ -5,6 +5,8 @@ geoButton.addEventListener("click", geolocationText);
 
 let place;
 let coordinates;
+let errorCode;
+let weatherDetails;
 
 /* Function for when the user searches via location name */
 function namedLocationText(){
@@ -39,23 +41,36 @@ function geolocationText(){
 /* The main weather function */
 async function weather() {
 
-  const main = document.getElementById('main')
-  const articles = document.querySelectorAll("article")
+  const main = document.getElementById('main');
+  const articles = document.querySelectorAll("article");
 
   /* If there are any articles from previous runs, remove them */
   if(articles != null){
     for(let i = 0; i < articles.length; i++){
-      articles[i].remove()
+      articles[i].remove();
     }
   }
 
-  let weatherDetails;
+  /* Checks for this special character as API does not catch it during testing */
+  if(place.includes("#")){
+    errorCode = 3;
+    errorArticle();
+    return;
+  }
 
-  const res = await fetch("https://weatherdbi.herokuapp.com/data/weather/" + place)
+  const res = await fetch("https://weatherdbi.herokuapp.com/data/weather/" + place);
 
-  weatherDetails = await res.json();
+  /* This is to catch a possible syntax error when invalid input is given */
+  try{
+    weatherDetails = await res.json();
+  }
+  catch (e){
+    errorCode = 3;
+    errorArticle();
+    return;
+  }
 
-  /* console.log(weatherDetails); */
+  /* console.log(weatherDetails);*/
   /* If the API was able to find a valid location, create the page */
   if(weatherDetails.region != undefined){
 
@@ -166,57 +181,70 @@ async function weather() {
 
   /* In the case of any errors create error section */
   else if(weatherDetails.status == "fail"){
-    const failArticle = document.createElement("article");
-    main.appendChild(failArticle);
-
-    const failSection = document.createElement("section");
-    failSection.id = "failSection";
-    failArticle.appendChild(failSection);
-
-    const failCause = document.createElement("p");
-    failCause.id = "failText";
-    failCause.innerHTML = "Error status: " + weatherDetails.message;
-    failSection.appendChild(failCause);
 
     if(weatherDetails.code == "0"){
-      const failText = document.createElement("p");
-      failText.id = "failText";
-      failText.innerHTML = "Weather for this location cannot be found, or is not available." +
-      " Check for a spelling error, or try a different location.";
-      failSection.appendChild(failText);
+      errorCode = 0;
+      errorArticle();
     }
     else if(weatherDetails.code == "1"){
-      const failText = document.createElement("p");
-      failText.id = "failText";
-      failText.innerHTML = "The following characters: " + weatherDetails.rejected + " cannot be used in your query.";
-      failSection.appendChild(failText);
+      errorCode = 1;
+      errorArticle();
     }
     else if(weatherDetails.code == "2"){
-      const failText = document.createElement("p");
-      failText.id = "failText";
-      failText.innerHTML = "The geolocation search is currently unavailable. Try again later or use"+
-      " location search.";
-      failSection.appendChild(failText);
+      errorCode = 2;
+      errorArticle();
     }
     else{
-      const failText = document.createElement("p");
-      failText.id = "failText";
-      failText.innerHTML = "An unspecified error has occured! Sorry for any inconvenience.";
-      failSection.appendChild(failText);
+      errorCode = 100;
+      errorArticle();
     }
   }
   else{
-    const failArticle = document.createElement("article");
-    main.appendChild(failArticle);
-
-    const failSection = document.createElement("section");
-    failSection.id = "failSection";
-    failArticle.appendChild(failSection);
-
-    const failText = document.createElement("p");
-    failText.id = "failText";
-    failText.innerHTML = "An unspecified error has occured! Sorry for any inconvenience.";
-    failSection.appendChild(failText);
+    errorCode = 100;
+    errorArticle();
   }
 
+}
+
+/* The function used for the error article and sections*/
+function errorArticle(){
+  const failArticle = document.createElement("article");
+  main.appendChild(failArticle);
+
+  const failSection = document.createElement("section");
+  failSection.id = "failSection";
+  failArticle.appendChild(failSection);
+
+  const failCause = document.createElement("p");
+  failCause.id = "failText";
+
+  failSection.appendChild(failCause);
+
+  const failText = document.createElement("p");
+  failText.id = "failText";
+
+  /* These are all the current error codes and the messages they give */
+  if (errorCode == "100"){
+    failCause.innerHTML = "Error status: Unspecified error.";
+    failText.innerHTML = "An unspecified error has occured! Sorry for any inconvenience. Try another input.";
+  }
+  else if (errorCode == "0"){
+    failCause.innerHTML = "Error status: " + weatherDetails.message;
+    failText.innerHTML = "Weather for this location cannot be found, or is not available." +
+    " Check for a spelling error, or try a different location.";
+  }
+  else if (errorCode == "1"){
+    failCause.innerHTML = "Error status: " + weatherDetails.message;
+    failText.innerHTML = "The following characters: " + weatherDetails.rejected + " cannot be used in your query.";
+  }
+  else if (errorCode == "2"){
+    failCause.innerHTML = "Error status: " + weatherDetails.message;
+    failText.innerHTML = "The geolocation search is currently unavailable. Try again later or use"+
+    " location search.";
+  }
+  else if (errorCode == "3"){
+    failCause.innerHTML = "Error status: Invalid input";
+    failText.innerHTML = "There seems to be an error in the location input. Please check it and try another.";
+  }
+  failSection.appendChild(failText);
 }
