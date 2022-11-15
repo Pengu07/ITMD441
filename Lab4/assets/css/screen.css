@@ -41,6 +41,18 @@ section{
   flex-grow: 1;
 }
 
+input[type=button]{
+  background-color:#2d8ceb;
+  color: #ffffff;
+  border:none;
+  padding: 4px 8px 4px 8px;
+  border-radius: 12px;
+
+}
+input[type=button]:hover{
+  background-color: #1166bb;
+  color: #d9d9d9;
+}
 #mainSection{
   font-size: 24px;
   display:grid;
