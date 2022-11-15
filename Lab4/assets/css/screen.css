@@ -38,7 +38,9 @@ section{
   grid-template-columns: 1fr 1fr;
 }
 
-
+#failSection{
+  border: 0.15em solid #eb2d2d;
+}
 
 
 .maxtemp{
