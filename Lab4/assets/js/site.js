@@ -4,6 +4,7 @@ document.getElementById('geolocationButton').addEventListener("click", geolocati
 
 let place;
 let coordinates;
+let created = 0;
 
 function namedLocationText(){
   const namedLocation = document.getElementById('namedLocation');
@@ -36,52 +37,65 @@ async function weather() {
   const wind = document.getElementById('wind')
   const commentMain = document.getElementById('commentMain')
   const imageMain = document.getElementById('imageMain')
-  const article = document.getElementById('weatherArticle')
+  const main = document.getElementById('main')
+
 
   let weatherDetails;
 
   const res = await fetch("https://weatherdbi.herokuapp.com/data/weather/" + place)
 
-    weatherDetails = await res.json();
+  weatherDetails = await res.json();
 
-    /*console.log(weatherDetails); */
+  /*console.log(weatherDetails);*/
 
-    region.innerHTML = weatherDetails.region;
-    dayhour.innerHTML = weatherDetails.currentConditions.dayhour;
-    temp.innerHTML = weatherDetails.currentConditions.temp.f + " °F";
-    precip.innerHTML = weatherDetails.currentConditions.precip;
-    humidity.innerHTML = weatherDetails.currentConditions.humidity;
-    wind.innerHTML = weatherDetails.currentConditions.wind.mile + " mph";
-    commentMain.innerHTML = weatherDetails.currentConditions.comment;
-    imageMain.src = weatherDetails.currentConditions.iconURL;
+  region.innerHTML = weatherDetails.region;
+  dayhour.innerHTML = weatherDetails.currentConditions.dayhour;
+  temp.innerHTML = weatherDetails.currentConditions.temp.f + " °F";
+  precip.innerHTML = "Precipitation: " + weatherDetails.currentConditions.precip;
+  humidity.innerHTML = "Humidity: " + weatherDetails.currentConditions.humidity;
+  wind.innerHTML = "Wind Speed: " + weatherDetails.currentConditions.wind.mile + " mph";
+  commentMain.innerHTML = weatherDetails.currentConditions.comment;
+  imageMain.src = weatherDetails.currentConditions.iconURL;
 
-    weatherDetails.next_days.forEach((week =>{
+  if(created == 1){
+    main.removeChild(main.lastElementChild);
+  }
 
-        const newSection = document.createElement("section");
+  const newArticle = document.createElement("article");
+  newArticle.id = "weatherArticle";
+  main.appendChild(newArticle);
 
-        const day = document.createElement ("p");
-        day.innerHTML = week.day;
-        /*console.log(week.day);*/
+  let week = weatherDetails.next_days;
 
-        const comment = document.createElement ("p");
-        comment.innerHTML = week.comment;
+  week.slice(1).forEach((week =>{
 
-        const max = document.createElement ("p");
-        max.innerHTML = week.max_temp.f + " °F";
+    const newSection = document.createElement("section");
 
-        const min = document.createElement ("p");
-        min.innerHTML = week.min_temp.f + " °F";
+    const day = document.createElement ("p");
+    day.innerHTML = week.day;
+    /*console.log(week.day);*/
 
-        const image = document.createElement ("img");
-        image.src = week.iconURL;
+    const comment = document.createElement ("p");
+    comment.innerHTML = week.comment;
 
-        newSection.appendChild(day);
-        newSection.appendChild(comment);
-        newSection.appendChild(max);
-        newSection.appendChild(min);
-        newSection.appendChild(image);
-        article.appendChild(newSection);
+    const max = document.createElement ("p");
+    max.innerHTML = week.max_temp.f + " °F";
+    max.classList.add("maxtemp");
 
-    }));
+    const min = document.createElement ("p");
+    min.innerHTML = week.min_temp.f + " °F";
+    min.classList.add("mintemp");
 
+    const image = document.createElement ("img");
+    image.src = week.iconURL;
+
+    newSection.appendChild(day);
+    newSection.appendChild(image);
+    newSection.appendChild(comment);
+    newSection.appendChild(max);
+    newSection.appendChild(min);
+    newArticle.appendChild(newSection);
+
+  }));
+  created = 1;
 }

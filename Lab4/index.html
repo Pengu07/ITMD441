@@ -9,33 +9,37 @@
   </head>
 
   <body>
-    <main>
-      <form id="form">
-        <label class="namedLocationLabel" for="namedLocation">Enter a location:</label>
-        <input class="namedLocationInput" type="text" name="namedLocation" id="namedLocation"
-        placeholder="Chicago">
+    <main id = "main">
+      <form>
+        <div>
+          <label class="namedLocationLabel" for="namedLocation">Enter a location:</label>
+          <input class="namedLocationInput" type="text" name="namedLocation" id="namedLocation"
+          placeholder="Chicago">
 
-        <label class = "namedLocationButtonLabel" for = "namedLocationButton"/>
-        <input class = "namedLocationButtonInput" type = "button" id = "namedLocationButton"
-        value = "Search Location!">
-
-        <label class="geolocationLabel" for="geolocation"/>
-        <input class="geolocationInput" type="button" name="geolocation" id="geolocationButton"
-        value = "Geolocation Button">
+          <label class = "namedLocationButtonLabel" for = "namedLocationButton"></label>
+          <input class = "namedLocationButtonInput" type = "button" id = "namedLocationButton"
+          value = "Search Location!">
+        </div>
+        <div>
+          <label class="geolocationLabel" for="geolocation">Or click the geolocation button to use your location!</label>
+          <input class="geolocationInput" type="button" name="geolocation" id="geolocationButton"
+          value = "Geolocation Button">
+        </div>
       </form>
 
 
 
-      <article id="weatherArticle">
-        <section id="main">
+      <article>
+        <section id="mainSection">
             <p id="region">region</p>
             <p id="dayhour">dayhour</p>
+            <img src = "" alt = "weather image" id = "imageMain">
+
+            <p id="commentMain">comment: hi</p>
             <p id="temp">temp</p>
             <p id="precip">precip</p>
             <p id="humidity">humidity</p>
             <p id="wind">wind</p>
-            <p id="commentMain">comment: hi</p>
-            <img src = "" alt = "weather image" id = "imageMain">
         </section>
       </article>
     </main>
