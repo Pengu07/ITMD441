@@ -1,10 +1,33 @@
-document.getElementById('namedLocationButton').addEventListener("click", weather);
+document.getElementById('namedLocationButton').addEventListener("click", namedLocationText);
+
+document.getElementById('geolocationButton').addEventListener("click", geolocationText);
+
+let place;
+let coordinates;
+
+function namedLocationText(){
+  const namedLocation = document.getElementById('namedLocation');
+  place = namedLocation.value;
+  weather();
+}
+
+navigator.geolocation.getCurrentPosition(coords, error);
+function coords(pos){
+  coordinates = pos.coords;
+}
+
+function error(err){
+  console.log("Error!")
+}
+
+function geolocationText(){
+  place = coordinates.latitude + "," + coordinates.longitude;
+  console.log(place);
+  weather();
+}
 
 async function weather() {
 
-  event.preventDefault();
-  
-  const namedLocation = document.getElementById('namedLocation');
   const region = document.getElementById('region');
   const dayhour = document.getElementById('dayhour')
   const temp = document.getElementById('temp')
@@ -17,7 +40,7 @@ async function weather() {
 
   let weatherDetails;
 
-  const res = await fetch("https://weatherdbi.herokuapp.com/data/weather/" + namedLocation.value)
+  const res = await fetch("https://weatherdbi.herokuapp.com/data/weather/" + place)
 
     weatherDetails = await res.json();
 
