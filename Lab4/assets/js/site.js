@@ -1,9 +1,9 @@
-const form = document.getElementById('form');
-
-form.addEventListener('change', weather);
+document.getElementById('namedLocationButton').addEventListener("click", weather);
 
 async function weather() {
 
+  event.preventDefault();
+  
   const namedLocation = document.getElementById('namedLocation');
   const region = document.getElementById('region');
   const dayhour = document.getElementById('dayhour')
