@@ -4,7 +4,6 @@ document.getElementById('geolocationButton').addEventListener("click", geolocati
 
 let place;
 let coordinates;
-let created = 0;
 
 function namedLocationText(){
   const namedLocation = document.getElementById('namedLocation');
@@ -29,22 +28,61 @@ function geolocationText(){
 
 async function weather() {
 
-  const region = document.getElementById('region');
-  const dayhour = document.getElementById('dayhour')
-  const temp = document.getElementById('temp')
-  const precip = document.getElementById('precip')
-  const humidity = document.getElementById('humidity')
-  const wind = document.getElementById('wind')
-  const commentMain = document.getElementById('commentMain')
-  const imageMain = document.getElementById('imageMain')
   const main = document.getElementById('main')
+  const articles = document.querySelectorAll("article")
 
+  if(articles != null){
+    for(let i = 0; i < articles.length; i++){
+      articles[i].remove()
+    }
+  }
 
   let weatherDetails;
 
   const res = await fetch("https://weatherdbi.herokuapp.com/data/weather/" + place)
 
   weatherDetails = await res.json();
+
+  const mainArticle = document.createElement("article");
+  main.appendChild(mainArticle);
+
+  const mainSection = document.createElement("section");
+  mainSection.id = "mainSection";
+  mainArticle.appendChild(mainSection);
+
+  const region = document.createElement("p");
+  region.id = "region";
+  mainSection.appendChild(region);
+
+  const dayhour = document.createElement("p");
+  dayhour.id = "dayhour";
+  mainSection.appendChild(dayhour);
+
+  const imageMain = document.createElement("img");
+  imageMain.src = "";
+  imageMain.alt = "Weather image";
+  imageMain.id = imageMain;
+  mainSection.appendChild(imageMain);
+
+  const commentMain = document.createElement("p");
+  commentMain.id = "commentMain";
+  mainSection.appendChild(commentMain);
+
+  const temp = document.createElement("p");
+  temp.id = "temp";
+  mainSection.appendChild(temp);
+
+  const precip = document.createElement("p");
+  precip.id = "precip";
+  mainSection.appendChild(precip);
+
+  const humidity = document.createElement("p");
+  humidity.id = "humidity";
+  mainSection.appendChild(humidity);
+
+  const wind = document.createElement("p");
+  wind.id = "wind";
+  mainSection.appendChild(wind);
 
   /*console.log(weatherDetails);*/
 
@@ -56,10 +94,6 @@ async function weather() {
   wind.innerHTML = "Wind Speed: " + weatherDetails.currentConditions.wind.mile + " mph";
   commentMain.innerHTML = weatherDetails.currentConditions.comment;
   imageMain.src = weatherDetails.currentConditions.iconURL;
-
-  if(created == 1){
-    main.removeChild(main.lastElementChild);
-  }
 
   const newArticle = document.createElement("article");
   newArticle.id = "weatherArticle";
@@ -97,5 +131,4 @@ async function weather() {
     newArticle.appendChild(newSection);
 
   }));
-  created = 1;
 }
