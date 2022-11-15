@@ -6,12 +6,14 @@ geoButton.addEventListener("click", geolocationText);
 let place;
 let coordinates;
 
+/* Function for when the user searches via location name */
 function namedLocationText(){
   const namedLocation = document.getElementById('namedLocation');
   place = namedLocation.value;
   weather();
 }
 
+/* Geolocation activation */
 navigator.geolocation.getCurrentPosition(coords, error);
 function coords(pos){
   coordinates = pos.coords;
@@ -27,17 +29,20 @@ function error(err){
   document.getElementById("geolocationLabel").style.display = "none";
 }
 
+/* Uses geolocation for the weather API */
 function geolocationText(){
   place = coordinates.latitude + "," + coordinates.longitude;
   console.log(place);
   weather();
 }
 
+/* The main weather function */
 async function weather() {
 
   const main = document.getElementById('main')
   const articles = document.querySelectorAll("article")
 
+  /* If there are any articles from previous runs, remove them */
   if(articles != null){
     for(let i = 0; i < articles.length; i++){
       articles[i].remove()
@@ -49,7 +54,9 @@ async function weather() {
   const res = await fetch("https://weatherdbi.herokuapp.com/data/weather/" + place)
 
   weatherDetails = await res.json();
-  console.log(weatherDetails);
+
+  /* console.log(weatherDetails); */
+  /* If the API was able to find a valid location, create the page */
   if(weatherDetails.region != undefined){
 
     const mainArticle = document.createElement("article");
@@ -95,6 +102,7 @@ async function weather() {
 
     /*console.log(weatherDetails);*/
 
+    /* Sets the value for each parameter in the main section */
     region.innerHTML = weatherDetails.region;
     dayhour.innerHTML = weatherDetails.currentConditions.dayhour;
     temp.innerHTML = weatherDetails.currentConditions.temp.f + " °F";
@@ -104,12 +112,26 @@ async function weather() {
     commentMain.innerHTML = weatherDetails.currentConditions.comment;
     imageMain.src = weatherDetails.currentConditions.iconURL;
 
+    /* Adds text to denote the weekly forecast */
+    const weeklyArticle = document.createElement("article");
+    weeklyArticle.id = "weekly";
+    main.appendChild(weeklyArticle);
+
+    const weeklyHeader = document.createElement("h2");
+    weeklyHeader.innerHTML = "Next 7 days";
+    weeklyArticle.appendChild(weeklyHeader);
+
+    /* Create the 7 day forecast article and section */
     const newArticle = document.createElement("article");
     newArticle.id = "weatherArticle";
     main.appendChild(newArticle);
 
+    /* Set the next 7 days into the week variable */
     let week = weatherDetails.next_days;
 
+    /* Remove the first item and then do a for each.
+    The first item in this case displays the same day as the main section.
+    That is why we remove it here */
     week.slice(1).forEach((week =>{
 
       const newSection = document.createElement("section");
@@ -141,6 +163,8 @@ async function weather() {
 
     }));
   }
+
+  /* In the case of any errors create error section */
   else if(weatherDetails.status == "fail"){
     const failArticle = document.createElement("article");
     main.appendChild(failArticle);

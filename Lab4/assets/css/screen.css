@@ -5,6 +5,10 @@ html{
   color: #e6e6e6
 }
 
+h2{
+  margin-bottom: 0px;
+}
+
 body{
   display:grid;
   grid-template-columns: 1fr 3fr 1fr;
