@@ -229,7 +229,7 @@ function errorArticle(){
     failText.innerHTML = "An unspecified error has occured! Sorry for any inconvenience. Try another input.";
   }
   else if (errorCode == "0"){
-    failCause.innerHTML = "Error status: " + weatherDetails.message;
+    failCause.innerHTML = "Error status: Location not found";
     failText.innerHTML = "Weather for this location cannot be found, or is not available." +
     " Check for a spelling error, or try a different location.";
   }
