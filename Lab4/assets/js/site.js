@@ -40,8 +40,9 @@ function geolocationText(){
 
 /* The main weather function */
 async function weather() {
-
   const main = document.getElementById('main');
+  /* Checks for any past articles still visible */
+  cleanup();
 
   /* Checks for this special character as API does not catch it during testing */
   if(place.includes("#")){
@@ -62,6 +63,8 @@ async function weather() {
     errorArticle();
     return;
   }
+  
+  /* Second check for any past articles still visible */
   cleanup();
 
   /* console.log(weatherDetails);*/
