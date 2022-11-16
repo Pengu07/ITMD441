@@ -46,6 +46,7 @@ async function weather() {
   /* Checks for this special character as API does not catch it during testing */
   if(place.includes("#")){
     errorCode = 3;
+    cleanup();
     errorArticle();
     return;
   }
@@ -61,14 +62,7 @@ async function weather() {
     errorArticle();
     return;
   }
-
-  /* If there are any articles from previous runs, remove them */
-  const articles = document.querySelectorAll("article");
-  if(articles != null){
-    for(let i = 0; i < articles.length; i++){
-      articles[i].remove();
-    }
-  }
+  cleanup();
 
   /* console.log(weatherDetails);*/
   /* If the API was able to find a valid location, create the page */
@@ -247,4 +241,14 @@ function errorArticle(){
     failText.innerHTML = "There seems to be an error in the location input. Please check it and try another.";
   }
   failSection.appendChild(failText);
+}
+
+/* Checks for any leftover articles/sections and removes them */
+function cleanup(){
+  const articles = document.querySelectorAll("article");
+  if(articles != null){
+    for(let i = 0; i < articles.length; i++){
+      articles[i].remove();
+    }
+  }
 }
