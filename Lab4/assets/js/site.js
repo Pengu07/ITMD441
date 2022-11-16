@@ -23,7 +23,7 @@ function coords(pos){
 }
 
 function error(err){
-  console.log("Error! Geolocation Blocked!")
+  /*console.log("Error! Geolocation Blocked!")*/
   document.getElementById("geolocationText").innerHTML = "Geolocation has been disabled."+
   " Enable it and refresh the page to use geolocation.";
   geoButton.disabled = true;
@@ -34,7 +34,7 @@ function error(err){
 /* Uses geolocation for the weather API */
 function geolocationText(){
   place = coordinates.latitude + "," + coordinates.longitude;
-  console.log(place);
+  /*console.log(place);*/
   weather();
 }
 
@@ -42,14 +42,6 @@ function geolocationText(){
 async function weather() {
 
   const main = document.getElementById('main');
-  const articles = document.querySelectorAll("article");
-
-  /* If there are any articles from previous runs, remove them */
-  if(articles != null){
-    for(let i = 0; i < articles.length; i++){
-      articles[i].remove();
-    }
-  }
 
   /* Checks for this special character as API does not catch it during testing */
   if(place.includes("#")){
@@ -68,6 +60,14 @@ async function weather() {
     errorCode = 3;
     errorArticle();
     return;
+  }
+
+  /* If there are any articles from previous runs, remove them */
+  const articles = document.querySelectorAll("article");
+  if(articles != null){
+    for(let i = 0; i < articles.length; i++){
+      articles[i].remove();
+    }
   }
 
   /* console.log(weatherDetails);*/
